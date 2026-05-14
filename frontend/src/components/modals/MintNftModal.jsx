@@ -89,7 +89,7 @@ const MintNftModal = ({ open, onClose }) => {
     }
   
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/nft/mint`, formData, {
+      const res = await axios.post(`${""}/api/nft/mint`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
   

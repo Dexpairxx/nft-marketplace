@@ -18,7 +18,7 @@ function BuyingModal({ nft, onClose }) {
     try {
       console.log("Attempting to buy NFT:", nft);
 
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/nft/info/marketplace`);
+      const res = await axios.get(`${""}/api/nft/info/marketplace`);
       console.log("Response from server:", res.data);
 
       const { mintAddress, marketplaceAddress, mintContractABI, marketplaceContractABI } = res.data;
@@ -26,7 +26,7 @@ function BuyingModal({ nft, onClose }) {
       const contract = await getContract(marketplaceAddress, marketplaceContractABI);
       console.log("Contract obtained:", contract);
 
-      const sale = await axios.get(`${import.meta.env.VITE_API_URL}/api/nft/info/sale/${nft.token_id}`);
+      const sale = await axios.get(`${""}/api/nft/info/sale/${nft.token_id}`);
       console.log("Sale info:", sale.data[0].listing_blockchain_id);
 
       const transaction = await contract.purchaseNFT(sale.data[0].listing_blockchain_id, {value: nft.price});

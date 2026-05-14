@@ -23,7 +23,7 @@ function ListingModal({ nft, onClose }) {
     try {
       console.log("Attempting to cancel NFT:", nft);
 
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/nft/info/marketplace`);
+      const res = await axios.get(`${""}/api/nft/info/marketplace`);
       console.log("Response from server:", res.data);
   
       const { mintAddress, marketplaceAddress, mintContractABI, marketplaceContractABI } = res.data;
@@ -31,7 +31,7 @@ function ListingModal({ nft, onClose }) {
       const contract = await getContract(marketplaceAddress, marketplaceContractABI);
       console.log("Contract obtained:", contract);
 
-      const sale = await axios.get(`${import.meta.env.VITE_API_URL}/api/nft/info/sale/${nft.token_id}`);
+      const sale = await axios.get(`${""}/api/nft/info/sale/${nft.token_id}`);
       console.log("Sale info:", sale.data[0].listing_blockchain_id);
       
       const removal = await contract.removeSale(sale.data[0].listing_blockchain_id);

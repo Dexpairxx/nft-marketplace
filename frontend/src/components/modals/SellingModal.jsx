@@ -27,7 +27,7 @@ function SellingModal({ nft, onClose }) {
       console.log("Attempting to sell NFT:", nft);
       console.log("Base price in ETH:", price);
 
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/nft/info/marketplace`);
+      const res = await axios.get(`${""}/api/nft/info/marketplace`);
       console.log("Response from server:", res.data);
   
       const { mintAddress, marketplaceAddress, mintContractABI, marketplaceContractABI } = res.data;

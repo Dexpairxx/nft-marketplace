@@ -1,16 +1,19 @@
 const {uploadFile, uploadMetaData} = require("../services/pinataService")
 const conn = require("../../database/database");
 const fs = require("fs");
+const path = require("path");
+
+const BLOCKCHAIN_DIR = path.join(__dirname, "../../../blockchain");
 
 // Controller function to return contract address and ABI
 const getMarketplaceInfo = async (req, res) => {
-    const contractAddress = JSON.parse(fs.readFileSync("../blockchain/contractAddresses.json"));
+    const contractAddress = JSON.parse(fs.readFileSync(path.join(BLOCKCHAIN_DIR, "contractAddresses.json")));
 
     const mintAddress = contractAddress.MetaMintNFT;
     const marketplaceAddress = contractAddress.MarketplaceNFT;
 
-    const mintContractABI = JSON.parse(fs.readFileSync("../blockchain/artifacts/contracts/MetaMintNFT.sol/MetaMintNFT.json")).abi
-    const marketplaceContractABI = JSON.parse(fs.readFileSync("../blockchain/artifacts/contracts/MarketplaceNFT.sol/MarketplaceNFT.json")).abi
+    const mintContractABI = JSON.parse(fs.readFileSync(path.join(BLOCKCHAIN_DIR, "artifacts/contracts/MetaMintNFT.sol/MetaMintNFT.json"))).abi
+    const marketplaceContractABI = JSON.parse(fs.readFileSync(path.join(BLOCKCHAIN_DIR, "artifacts/contracts/MarketplaceNFT.sol/MarketplaceNFT.json"))).abi
     
     res.json({ success: true, mintAddress, marketplaceAddress, mintContractABI, marketplaceContractABI });
 }
@@ -39,8 +42,8 @@ const mintNFT = async (req, res) => {
         const uploadMetaDataResult = await uploadMetaData(metaData);
        
         console.log(uploadMetaDataResult)
-        const contractAddress = JSON.parse(fs.readFileSync("../blockchain/contractAddresses.json")).MetaMintNFT;
-        const contractABI = JSON.parse(fs.readFileSync("../blockchain/artifacts/contracts/MetaMintNFT.sol/MetaMintNFT.json")).abi
+        const contractAddress = JSON.parse(fs.readFileSync(path.join(BLOCKCHAIN_DIR, "contractAddresses.json"))).MetaMintNFT;
+        const contractABI = JSON.parse(fs.readFileSync(path.join(BLOCKCHAIN_DIR, "artifacts/contracts/MetaMintNFT.sol/MetaMintNFT.json"))).abi
         
         res.json({ success: true, uploadMetaDataResult, contractAddress, contractABI });
     } catch (error) {
